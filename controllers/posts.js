@@ -4,7 +4,7 @@ import { User } from "../modules/user.js"
 export const getAllPosts = async (req, res) => {
     try {
         const posts = await Post.find()
-        const limit = 5
+        const limit = 20
         let pageCount = Math.ceil(posts.length / limit)
         let currentPage = parseInt(req.query.page)
         if (!currentPage) {

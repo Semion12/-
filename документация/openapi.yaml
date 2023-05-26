@@ -1,0 +1,182 @@
+
+https://editor.swagger.io/ - ссылка на editor
+
+openapi: 3.0.0
+info:
+  title: Sample API
+  
+  version: 0.1.9
+servers:
+  - url: http://localhost:3001
+    description: backend для авторизации и постов
+paths:
+  /posts:
+    
+    get:
+      summary: Возвращает список постов
+      responses:
+        '200':
+          description: массив постов
+          content:
+            application/json:
+              schema: 
+                type: array
+                $ref: "#/components/schemas/Posts"
+  
+    post:
+      summary: добавляет в массив новый пост
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userId:
+                  type: string
+                  example: "12212332"
+                description:
+                  type: string
+                  example: "new post"
+                
+                  
+      
+      responses:
+        '200':
+          description: массив постов
+          content:
+            application/json:
+              schema: 
+                type: array
+                $ref: "#/components/schemas/Posts"
+  /posts/{post_id}:
+    delete:
+      summary: Удаляет пост по id и вызывает все посты кроме удаленного
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type : integer
+            format: int64
+            minimum: 1
+     
+      responses:
+        '200':
+          description: массив постов
+          content:
+            application/json:
+              schema: 
+                type: array
+                $ref: "#/components/schemas/Posts"
+          
+                
+    put:
+    
+      parameters:
+        - name: userId
+          in: path
+          required: true
+         
+          schema:
+            type : integer
+            format: int64
+            minimum: 1
+      responses: 
+        '200':
+          description: успешное обновление
+          content:
+            application/json:
+              schema: 
+                type: object
+                $ref: "#/components/schemas/Post"
+  /login:
+    post:
+      summary: вход зарегистрированного пользователя
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nickname:
+                  type: string
+                  example: "semion"
+                password:
+                  type: string
+                  example: 'password'
+      responses: 
+        '200':
+          description: пользователь вошел
+          content:
+            application/json:
+              schema: 
+                type: object
+                $ref: "#/components/schemas/Post"
+               
+                
+                
+  /register:
+    post:
+      summary: вход зарегистрированного пользователя
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                
+                _id:
+                  type: string
+                  example: '6470b5c840551b749ef201da'
+                nickname:
+                  type: string
+                  example: "semion"
+                password:
+                  type: string
+                  example: "semion"
+                createdAt:
+                  type: string
+                  example: "2023-05-26T13:36:08.517Z"
+                updateddAt:
+                  type: string
+                  example: "2023-05-26T13:36:08.517Z"  
+      responses: 
+        '200':
+          description: пользователь вошел
+          
+components:
+  schemas:
+    Post:
+      type: object
+      properties:
+          _id:
+            type: string
+            example: "12212332"
+            
+          userId:
+            type: string
+            example: "12212332"
+          decsription:
+            type: string
+            example: 'hello'
+          nickname:
+            type: string
+            example: "semion"
+          createdAt:
+            type: string
+            example: "2023-05-26T13:36:08.517Z"
+          updateddAt:
+            type: string
+            example: "2023-05-26T13:36:08.517Z"  
+          
+    Posts:
+      type: array
+      items:
+        $ref: "#/components/schemas/Post"
+
+
+      
+      
